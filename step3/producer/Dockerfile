@@ -1,9 +1,9 @@
-FROM maven:3.6.1-jdk-8 as mavenBuild
+FROM maven:latest as mavenBuild
 COPY pom.xml pom.xml
 COPY src src
 RUN ["mvn", "install"]
 
-FROM java:8
+FROM openjdk:latest
 COPY --from=mavenBuild ./target/*.jar ./
 ENV JAVA_OPTS ""
 CMD [ "bash", "-c", "java ${JAVA_OPTS} -jar *.jar"]
